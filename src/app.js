@@ -1,0 +1,105 @@
+import express from "express";
+import cors from "cors";
+import mysql from "mysql2/promise";
+
+const app = express();
+app.use(express.json());
+app.use(cors());
+
+// 🔌 Conexão com o banco
+const pool = await mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "senai", // altere se necessário
+  database: "biblioteca",
+});
+
+
+app.get("/", (req, res) => {
+  res.send("API da BiblioFile rodando! ");
+});
+
+
+app.get("/livros", async (req, res) => {
+  try {
+    const [rows] = await pool.query("SELECT * FROM livros");
+    res.json(rows);
+  } catch (error) {
+    console.error("Erro ao buscar livros:", error);
+    res.status(500).json({ erro: error.message });
+  }
+});
+
+app.get("/livros/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const [rows] = await pool.query("SELECT * FROM livros WHERE id = ?", [id]);
+    if (rows.length === 0) {
+      return res.status(404).json({ erro: "Livro não encontrado" });
+    }
+    res.json(rows[0]);
+  } catch (error) {
+    res.status(500).json({ erro: error.message });
+  }
+});
+
+
+app.post("/livros", async (req, res) => {
+  try {
+    const { titulo, autor, genero, avaliacao, paginas } = req.body;
+
+    if (!titulo || !autor) {
+      return res.status(400).json({ erro: "Título e autor são obrigatórios" });
+    }
+
+    await pool.query(
+      "INSERT INTO livros (titulo, autor, genero, avaliacao, paginas) VALUES (?, ?, ?, ?, ?)",
+      [titulo, autor, genero, avaliacao, paginas]
+    );
+
+    res.status(201).json({ mensagem: "Livro adicionado com sucesso!" });
+  } catch (error) {
+    res.status(500).json({ erro: error.message });
+  }
+});
+
+
+app.put("/livros/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { titulo, autor, genero, avaliacao, paginas } = req.body;
+
+    const [result] = await pool.query(
+      "UPDATE livros SET titulo=?, autor=?, genero=?, avaliacao=?, paginas=? WHERE id=?",
+      [titulo, autor, genero, avaliacao, paginas, id]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ erro: "Livro não encontrado" });
+    }
+
+    res.json({ mensagem: "Livro atualizado com sucesso!" });
+  } catch (error) {
+    res.status(500).json({ erro: error.message });
+  }
+});
+
+
+app.delete("/livros/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const [result] = await pool.query("DELETE FROM livros WHERE id = ?", [id]);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ erro: "Livro não encontrado" });
+    }
+
+    res.json({ mensagem: "Livro deletado com sucesso!" });
+  } catch (error) {
+    res.status(500).json({ erro: error.message });
+  }
+});
+
+
+
+app.listen(3000, () => console.log("Servidor rodando em http://localhost:3000"));
