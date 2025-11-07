@@ -6,17 +6,19 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// 🔌 Conexão com o banco
-const pool = await mysql.createConnection({
+const pool = mysql.createPool({
   host: "localhost",
   user: "root",
-  password: "senai", // altere se necessário
+  password: "senai",
   database: "biblioteca",
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
 
 app.get("/", (req, res) => {
-  res.send("API da BiblioFile rodando! ");
+  res.send("API da BiblioFile rodando!");
 });
 
 
@@ -30,6 +32,7 @@ app.get("/livros", async (req, res) => {
   }
 });
 
+
 app.get("/livros/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -39,6 +42,7 @@ app.get("/livros/:id", async (req, res) => {
     }
     res.json(rows[0]);
   } catch (error) {
+    console.error("Erro ao buscar livro:", error);
     res.status(500).json({ erro: error.message });
   }
 });
@@ -46,20 +50,22 @@ app.get("/livros/:id", async (req, res) => {
 
 app.post("/livros", async (req, res) => {
   try {
-    const { titulo, autor, genero, avaliacao, paginas } = req.body;
+    const { titulo, autor, genero, paginas, avaliacao } = req.body;
 
     if (!titulo || !autor) {
       return res.status(400).json({ erro: "Título e autor são obrigatórios" });
     }
 
+
     await pool.query(
-      "INSERT INTO livros (titulo, autor, genero, avaliacao, paginas) VALUES (?, ?, ?, ?, ?)",
-      [titulo, autor, genero, avaliacao, paginas]
+      "INSERT INTO livros (titulo, autor, genero, paginas, avaliacao) VALUES (?, ?, ?, ?, ?)",
+      [titulo, autor, genero, paginas, avaliacao]
     );
 
     res.status(201).json({ mensagem: "Livro adicionado com sucesso!" });
   } catch (error) {
-    res.status(500).json({ erro: error.message });
+    console.error("Erro ao cadastrar livro:", error);
+    res.status(500).json({ erro: error });
   }
 });
 
@@ -67,11 +73,11 @@ app.post("/livros", async (req, res) => {
 app.put("/livros/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { titulo, autor, genero, avaliacao, paginas } = req.body;
+    const { titulo, autor, genero, paginas, avaliacao } = req.body;
 
     const [result] = await pool.query(
-      "UPDATE livros SET titulo=?, autor=?, genero=?, avaliacao=?, paginas=? WHERE id=?",
-      [titulo, autor, genero, avaliacao, paginas, id]
+      "UPDATE livros SET titulo=?, autor=?, genero=?, paginas=?, avaliacao=? WHERE id=?",
+      [titulo, autor, genero, paginas, avaliacao, id]
     );
 
     if (result.affectedRows === 0) {
@@ -80,10 +86,10 @@ app.put("/livros/:id", async (req, res) => {
 
     res.json({ mensagem: "Livro atualizado com sucesso!" });
   } catch (error) {
+    console.error("Erro ao atualizar livro:", error);
     res.status(500).json({ erro: error.message });
   }
 });
-
 
 app.delete("/livros/:id", async (req, res) => {
   try {
@@ -94,12 +100,14 @@ app.delete("/livros/:id", async (req, res) => {
       return res.status(404).json({ erro: "Livro não encontrado" });
     }
 
-    res.json({ mensagem: "Livro deletado com sucesso!" });
+    res.json({ mensagem: " Livro deletado com sucesso!" });
   } catch (error) {
+    console.error("Erro ao deletar livro:", error);
     res.status(500).json({ erro: error.message });
   }
 });
 
 
-
-app.listen(3000, () => console.log("Servidor rodando em http://localhost:3000"));
+app.listen(3000, () =>
+  console.log("Servidor rodando em http://localhost:3000")
+);

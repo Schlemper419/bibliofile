@@ -17,7 +17,7 @@
       background-color: #fff;
       border-radius: 15px;
       padding: 20px;
-       box-shadow: 0 2px 6px rgba(0,0,0,0.1); 
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
     .book-card {
       border-radius: 15px;
@@ -35,91 +35,39 @@
       background-color: #2e2e2e;
       color: #fff;
     }
-    .navbar-brand i {
-      margin-right: 5px;
-    }
     .profile-pic {
       width: 40px;
       height: 40px;
       border-radius: 50%;
       object-fit: cover;
     }
-
     .book-card img {
-  width: 100%;
-  max-width: 140px;   
-  height: auto;
-  border-radius: 10px;
-  object-fit: cover;  
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-.bg-secondary.bg-opacity-10 {
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 220px;
-}
-
-.navbar-brand img {
-  width: 24px;    
-  height: 24px;
-  object-fit: contain;
-  margin-right: 8px;
-  vertical-align: middle;
-}
-
-
+      width: 100%;
+      max-width: 140px;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .bg-secondary.bg-opacity-10 {
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 220px;
+    }
   </style>
 </head>
 <body>
 
   <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-4">
     <a class="navbar-brand d-flex align-items-center fw-bold" href="#">
-      <img src="images/livro.png" alt="Ícone Livro">
+      <img src="images/livro.png" alt="Ícone Livro" style="width:24px;height:24px;margin-right:8px;">
       BiblioFile
     </a>
-    
-
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-3">
-        <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Meus Livros</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Comunidade</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Recomendações</a></li>
-      </ul>
-
-      <form class="d-flex me-3">
-        <div class="input-group">
-          <span class="input-group-text bg-white border-end-0">
-            <i class="bi bi-search"></i>
-          </span>
-          <input 
-            class="form-control border-start-0" 
-            type="search" 
-            placeholder="Buscar livros..." 
-            aria-label="Buscar">
-        </div>
-      </form>
-      
-      <div class="d-flex align-items-center">
-     
-        <i class="bi bi-bell fs-5 me-3" style="cursor: pointer;"></i>
-        <img src="images/foto-de-perfil.png" alt="Perfil" class="profile-pic me-2">
-      </div>
-      
-      
-    </div>
   </nav>
 
   <div class="container my-4">
     <div class="row g-4">
-
-    
       <div class="col-lg-3">
         <div class="sidebar mb-4">
           <div class="text-center mb-3">
@@ -160,29 +108,25 @@
           <button class="btn btn-black w-100">Aplicar Filtros</button>
         </div>
       </div>
-
-
       <div class="col-lg-9">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h4>Meu Diário de Leitura</h4>
-          <button class="btn btn-black"><i class="bi bi-plus-lg"></i> Registrar Leitura</button>
         </div>
-
         <div class="card p-4 mb-4">
           <h5 class="mb-3">Registre sua Leitura</h5>
-          <form>
+          <form id="registrarLivro">
             <div class="row g-3">
               <div class="col-md-6">
                 <label class="form-label">Título do Livro</label>
-                <input type="text" class="form-control" placeholder="Digite o título do livro">
+                <input type="text" id="titulo" class="form-control" placeholder="Digite o título do livro">
               </div>
               <div class="col-md-6">
                 <label class="form-label">Autor</label>
-                <input type="text" class="form-control" placeholder="Nome do autor">
+                <input type="text" id="autor" class="form-control" placeholder="Nome do autor">
               </div>
               <div class="col-md-6">
                 <label class="form-label">Gênero do Livro</label>
-                <select class="form-select">
+                <select id="genero" class="form-select">
                   <option>Selecione o gênero</option>
                   <option>Fantasia</option>
                   <option>Romance</option>
@@ -191,15 +135,11 @@
               </div>
               <div class="col-md-6">
                 <label class="form-label">Total de Páginas</label>
-                <input type="number" class="form-control" placeholder="Ex: 350">
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Tempo de Leitura (horas)</label>
-                <input type="number" class="form-control" placeholder="Ex: 15">
+                <input type="number" id="totalDePaginas" class="form-control" placeholder="Ex: 350">
               </div>
               <div class="col-md-6">
                 <label class="form-label">Sua Nota (1-5)</label>
-                <select class="form-select">
+                <select id="nota" class="form-select">
                   <option>Selecione uma nota</option>
                   <option>1</option>
                   <option>2</option>
@@ -208,28 +148,24 @@
                   <option>5</option>
                 </select>
               </div>
-              <div class="col-12">
-                <label class="form-label">Resenha (opcional)</label>
-                <textarea class="form-control" rows="3" placeholder="Compartilhe sua opinião sobre o livro..."></textarea>
-              </div>
             </div>
-
             <div class="mt-3 d-flex justify-content-end gap-2">
               <button type="reset" class="btn btn-outline-secondary">Cancelar</button>
               <button type="submit" class="btn btn-black">Registrar Leitura</button>
             </div>
           </form>
         </div>
-
-        <div class="row g-3">
+        <div class="row g-3 mb-4">
           <div class="col-md-4">
             <div class="card book-card">
               <div class="card-body text-center">
-                <div class="bg-secondary bg-opacity-10 mb-3 py-5 rounded"><img src="images/senhor-dos-aneis.jpg" alt=""></div>
+                <div class="bg-secondary bg-opacity-10 mb-3 py-5 rounded">
+                  <img src="images/senhor-dos-aneis.jpg" alt="">
+                </div>
                 <h6>O Senhor dos Anéis</h6>
                 <p class="text-muted small mb-1">J.R.R. Tolkien</p>
                 <span class="badge bg-light text-dark mb-2">Fantasia</span>
-                <p class="mb-1 small"> 5.0</p>
+                <p class="mb-1 small">Nota: 5.0</p>
                 <p class="mb-0 small">Páginas: 1216 | Tempo: 45h</p>
               </div>
             </div>
@@ -237,11 +173,13 @@
           <div class="col-md-4">
             <div class="card book-card">
               <div class="card-body text-center">
-                <div class="bg-secondary bg-opacity-10 mb-3 py-5 rounded"><img src="images/duna.jpg" alt=""></div>
+                <div class="bg-secondary bg-opacity-10 mb-3 py-5 rounded">
+                  <img src="images/duna.jpg" alt="">
+                </div>
                 <h6>Duna</h6>
                 <p class="text-muted small mb-1">Frank Herbert</p>
                 <span class="badge bg-light text-dark mb-2">Ficção Científica</span>
-                <p class="mb-1 small"> 4.0</p>
+                <p class="mb-1 small">Nota: 4.0</p>
                 <p class="mb-0 small">Páginas: 896 | Tempo: 32h</p>
               </div>
             </div>
@@ -249,86 +187,84 @@
           <div class="col-md-4">
             <div class="card book-card">
               <div class="card-body text-center">
-                <div class="bg-secondary bg-opacity-10 mb-3 py-5 rounded"><img src="images/orgulho-e-preconceito.jpg" alt=""></div>
+                <div class="bg-secondary bg-opacity-10 mb-3 py-5 rounded">
+                  <img src="images/orgulho-e-preconceito.jpg" alt="">
+                </div>
                 <h6>Orgulho e Preconceito</h6>
                 <p class="text-muted small mb-1">Jane Austen</p>
                 <span class="badge bg-light text-dark mb-2">Romance</span>
-                <p class="mb-1 small"> 5.0</p>
+                <p class="mb-1 small">Nota: 5.0</p>
                 <p class="mb-0 small">Páginas: 432 | Tempo: 18h</p>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
+
+        <div id="trescard" class="row g-3"></div>
+
+      </div>
     </div>
   </div>
 
-
   <script>
-    const form = document.querySelector("form");
-    const livrosContainer = document.querySelector(".row.g-3:last-of-type");
-    async function carregarLivros() {
+    document.getElementById('registrarLivro').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      const livro = {
+        titulo: document.getElementById("titulo").value,
+        autor: document.getElementById("autor").value,
+        genero: document.getElementById("genero").value,
+        paginas: document.getElementById("totalDePaginas").value,
+        avaliacao: document.getElementById("nota").value
+      };
+
       try {
-        const resposta = await fetch("http://localhost:3000/livros");
-        const livros = await resposta.json();
-  
-        livros.forEach(livro => {
-          const div = document.createElement("div");
-          div.classList.add("col-md-4");
-          div.innerHTML = `
-            <div class="card book-card">
-              <div class="card-body text-center">
-                <div class="bg-secondary bg-opacity-10 mb-3 py-5 rounded">
-                  <img src="images/livro.png" alt="">
-                </div>
-                <h6>${livro.titulo}</h6>
-                <p class="text-muted small mb-1">${livro.autor}</p>
-                <span class="badge bg-light text-dark mb-2">${livro.genero || "—"}</span>
-                <p class="mb-1 small">${livro.avaliacao || "—"}</p>
-                <p class="mb-0 small">Páginas: ${livro.paginas || "?"}</p>
-              </div>
-            </div>
-          `;
-          livrosContainer.appendChild(div);
-        });
-      } catch (erro) {
-        console.error("Erro ao carregar livros:", erro);
-      }
-    }
-  
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-  
-      const titulo = form.querySelector('input[placeholder="Digite o título do livro"]').value;
-      const autor = form.querySelector('input[placeholder="Nome do autor"]').value;
-      const genero = form.querySelector('select.form-select').value;
-      const paginas = form.querySelector('input[placeholder="Ex: 350"]').value;
-      const horas = form.querySelector('input[placeholder="Ex: 15"]').value;
-      const avaliacao = form.querySelectorAll('select.form-select')[1].value;
-  
-      const livro = { titulo, autor, genero, paginas, avaliacao };
-  
-      try {
-        const resposta = await fetch("http://localhost:3000/livros", {
+        const res = await fetch("http://localhost:3000/livros", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(livro)
         });
-  
-        if (!resposta.ok) throw new Error("Erro ao registrar livro");
-  
-        alert(" Livro registrado com sucesso!");
-        location.reload();
-      } catch (erro) {
-        console.error("Erro:", erro);
-        alert(" Erro ao registrar livro");
+
+        const data = await res.json();
+        alert(data.mensagem);
+        carregarLivros();
+        document.getElementById('registrarLivro').reset();
+      } catch (error) {
+        alert("Erro ao registrar livro!");
+        console.error(error);
       }
     });
-  
+
+    async function carregarLivros() {
+      try {
+        const res = await fetch('http://localhost:3000/livros');
+        const livros = await res.json();
+
+        let html = "";
+        livros.forEach(element => {
+          html += `
+            <div class="col-md-4">
+              <div class="card book-card">
+                <div class="card-body text-center">
+                  <h6>${element.titulo}</h6>
+                  <p class="text-muted small mb-1">${element.autor}</p>
+                  <span class="badge bg-light text-dark mb-2">${element.genero}</span>
+                  <p class="mb-1 small">Nota: ${element.avaliacao}</p>
+                  <p class="mb-0 small">Páginas: ${element.paginas}</p>
+                </div>
+              </div>
+            </div>`;
+        });
+
+        document.getElementById("trescard").innerHTML = html;
+      } catch (err) {
+        console.error("Erro ao carregar livros:", err);
+      }
+    }
+
     carregarLivros();
   </script>
-  
 
 </body>
 </html>
